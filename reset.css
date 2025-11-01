@@ -1,0 +1,19 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    min-height: 100vh;
+    line-height: 1.5;
+    font-family: 'Roboto', sans-serif;
+    background-color: #BDB5B5;
+}
+input, button, textarea, select {
+    font: inherit;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
