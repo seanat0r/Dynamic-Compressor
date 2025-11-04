@@ -9,11 +9,17 @@ body {
     min-height: 100vh;
     line-height: 1.5;
     font-family: 'Roboto', sans-serif;
-    background-color: #BDB5B5;
+    background-color: #F2F2F2;
 }
 input, button, textarea, select {
     font: inherit;
     border: none;
     background-color: transparent;
     outline: none;
+}
+h1 {
+    font-weight: 900;
+}
+h2 {
+    font-weight: 600;
 }
