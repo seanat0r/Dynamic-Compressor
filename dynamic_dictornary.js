@@ -134,6 +134,10 @@ class StorageAnalysis {
     #calculateCompressedCodeSize(compressionCode) {
         return compressionCode.length;
     }
+    #calculatePercentage(total, savedSize) {
+        let number = (savedSize / total) * 100;
+        return Math.trunc(number * 100) / 100;
+    }
 
     getAnalysis() {
         const originalSize = this.#calculateOriginalSize(this.originalString);
@@ -144,10 +148,14 @@ class StorageAnalysis {
         let newStorage = codeSize + dictionarySize;
         let savedSize = originalSize - newStorage;
 
+        const percentage = this.#calculatePercentage(originalSize, savedSize);
+        console.log(percentage)
         return {
             originalSize: originalSize,
             newStorage: newStorage,
-            savedSize: savedSize
+            newStorageWithoutOverhead: codeSize,
+            savedSize: savedSize,
+            savingPercentage: percentage,
         }        
     }
 }
@@ -198,7 +206,9 @@ class UI {
         const compromissedString = dataPackage.compromissedText;
         const originalSize = dataPackage.analysisStorage.originalSize;
         const compromissedSize = dataPackage.analysisStorage.newStorage;
+        const compromissedSizeWithoutOverhead = dataPackage.analysisStorage.newStorageWithoutOverhead
         const savedSize = dataPackage.analysisStorage.savedSize;
+        const savedPercentage = dataPackage.analysisStorage.savingPercentage;
 
         const displayContent = [
             "Original Text:",
@@ -208,12 +218,14 @@ class UI {
             "Storage Analysis",
             `original Size: ${originalSize} Bits`,
             `compromissed Size: ${compromissedSize} Bits`,
-            `saved Bits: ${savedSize}`
+            `compromissed Size without overhead:  ${compromissedSizeWithoutOverhead} Bits`,
+            `saved Bits: ${savedSize}`,
+            `compression ratio: ${savedPercentage}%`,
         ]
 
         this.outputfield.innerText = "";
 
-        const allParagraph = this.#appendElement(8, this.outputfield);
+        const allParagraph = this.#appendElement(displayContent.length, this.outputfield);
 
         allParagraph.forEach((p, i) => {
             p.innerText = displayContent[i]
